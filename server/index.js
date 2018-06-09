@@ -16,6 +16,8 @@ const port = 3001;
 app.get("/api/getTriviaQuestion", tControl.getTriviaQuestion);
 //app.get("/api/getTriviaArraySize", tControl.triviaArraySize);
 
+app.post("/api/postTriviaQuestion", tControl.postTriviaQuestion);
+
 //set server to listen for requests
 app.listen(port, () => {
   console.log(`Server listTening on port ${port}`);

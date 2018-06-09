@@ -27,20 +27,22 @@ export default class TriviaCard extends Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:3001/api/getTriviaQuestion").then(response => {
-      this.setState({
-        id: response.data.id,
-        question: response.data.question,
-        answer: response.data.answer,
-        value: response.data.value,
-        category: response.data.category.title
-        //   }))
-        // .then(axios.get("http://localhost:3001/api/getTriviaArraySize").then(response => {
-        //       this.setState({
-        //         triviaArraySize: response.data.triviaArraySize
+    // axios
+    //   .all([
+    axios
+      .get("http://localhost:3001/api/getTriviaQuestion")
+      //     ,axios.get("http://localhost:3001/api/getTriviaArraySize")
+      //   ])
+      .then(response => {
+        this.setState({
+          id: response.data.id,
+          question: response.data.question,
+          answer: response.data.answer,
+          value: response.data.value,
+          category: response.data.category.title,
+          triviaArraySize: response.data.triviaArraySize
+        });
       });
-      //   () => )
-    });
   }
 
   next() {
