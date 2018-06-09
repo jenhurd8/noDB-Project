@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./TriviaCard.css";
 import axios from "axios";
 import ToggleFunction from "./Toggle";
+import Button from "./Button";
 
 export default class TriviaCard extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ export default class TriviaCard extends Component {
       answer: "",
       showAnswer: false,
       category: "",
-      value: 0
+      value: 0,
+      triviaArraySize: 0
     };
     this.next = this.next.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -32,7 +34,12 @@ export default class TriviaCard extends Component {
         answer: response.data.answer,
         value: response.data.value,
         category: response.data.category.title
+        //   }))
+        // .then(axios.get("http://localhost:3001/api/getTriviaArraySize").then(response => {
+        //       this.setState({
+        //         triviaArraySize: response.data.triviaArraySize
       });
+      //   () => )
     });
   }
 
@@ -49,16 +56,6 @@ export default class TriviaCard extends Component {
     });
   }
 
-  createSingleCard() {
-    this.setState({
-      category: this.state.obj.category.title,
-      value: this.state.obj.value,
-      question: this.state.obj.question,
-      answer: this.state.obj.answer,
-      id: this.state.obj.id
-    });
-  }
-
   render() {
     return (
       <div>
@@ -71,6 +68,20 @@ export default class TriviaCard extends Component {
         <br />
         <br />
         <button onClick={() => this.next()}>NEXT QUESTION</button>
+        <br />
+        <br />
+        <br />
+        <h5>Question ID#{this.state.id}</h5>
+        <br />
+        <br />
+        <button onClick={() => this.next()}>NEXT QUESTION</button>
+        <br />
+        <br />
+        <h4>Game Editor</h4>
+        <h3>Available Question Count: </h3>
+        <Button />
+        <Button />
+        <Button />
       </div>
     );
   }
