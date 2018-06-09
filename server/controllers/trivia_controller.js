@@ -29,6 +29,7 @@ const deleteTriviaID = (req, res, next) => {
   const { id } = req.params;
   triviaArray.splice(id, 1);
   res.status(200).send(triviaArray);
+  console.log(triviaArraySize);
 };
 
 //const updatedTriviaArraySize = triviaArraySize;

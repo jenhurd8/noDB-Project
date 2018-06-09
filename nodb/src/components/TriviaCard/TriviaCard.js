@@ -16,10 +16,11 @@ export default class TriviaCard extends Component {
       showAnswer: false,
       category: "",
       value: 0,
-      triviaArraySize: 100
+      triviaArraySize: 0
     };
     this.next = this.next.bind(this);
     this.toggle = this.toggle.bind(this);
+    // this.delete = this.delete.bind(this);
   }
 
   toggle() {
@@ -27,13 +28,15 @@ export default class TriviaCard extends Component {
     this.setState({ showAnswer: !this.state.showAnswer });
   }
 
-  delete(id) {
-    axios
-      .delete(`http://localhost:3001/api/getTriviaArray"${id}`)
-      .then(response => {
-        this.setState({ triviaArraySize: this.state.triviaArraySize });
-      });
-  }
+  //   delete(id) {
+  //     axios
+  //       .delete("http://localhost:3001/api/deleteTriviaID$`", { id: id })
+  //       .then(response => {
+  //         console.log(id);
+  //         console.log("yes");
+  //         this.setState({ triviaArraySize: this.state.triviaArraySize });
+  //       });
+  //   }
 
   componentDidMount() {
     // axios
@@ -48,8 +51,8 @@ export default class TriviaCard extends Component {
           question: response.data.question,
           answer: response.data.answer,
           value: response.data.value,
-          category: response.data.category.title
-          // triviaArraySize: response.data.triviaArraySize
+          category: response.data.category.title,
+          triviaArraySize: response.data.triviaArraySize
         });
       });
   }
@@ -63,6 +66,14 @@ export default class TriviaCard extends Component {
         value: response.data.value,
         category: response.data.category.title,
         showAnswer: false
+      });
+    });
+  }
+
+  getTriviaArraySize() {
+    axios.get("http://localhost:3001/api/getTriviaArraySize").then(response => {
+      this.setState({
+        triviaArraySize: response.data.triviaArraySize
       });
     });
   }
@@ -87,7 +98,10 @@ export default class TriviaCard extends Component {
           <h4>Game Editor</h4>
           <h3>Available Question Count: {this.state.triviaArraySize} </h3>
           <Button name={"Edit Question"} />
-          <Button name={"Delete Question"} />
+          <Button
+            name={"Delete Question"}
+            // onClick={() => this.delete(this.id)}
+          />
           <Button
             onClick={() => this.createNewQuestion}
             name={"Create new Question"}
