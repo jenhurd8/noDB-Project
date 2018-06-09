@@ -16,14 +16,23 @@ export default class TriviaCard extends Component {
       showAnswer: false,
       category: "",
       value: 0,
-      triviaArraySize: 0
+      triviaArraySize: 100
     };
     this.next = this.next.bind(this);
     this.toggle = this.toggle.bind(this);
   }
 
   toggle() {
+    console.log(this.state.triviaArraySize);
     this.setState({ showAnswer: !this.state.showAnswer });
+  }
+
+  delete(id) {
+    axios
+      .delete(`http://localhost:3001/api/getTriviaArray"${id}`)
+      .then(response => {
+        this.setState({ triviaArraySize: this.state.triviaArraySize });
+      });
   }
 
   componentDidMount() {
@@ -39,8 +48,8 @@ export default class TriviaCard extends Component {
           question: response.data.question,
           answer: response.data.answer,
           value: response.data.value,
-          category: response.data.category.title,
-          triviaArraySize: response.data.triviaArraySize
+          category: response.data.category.title
+          // triviaArraySize: response.data.triviaArraySize
         });
       });
   }
@@ -57,13 +66,6 @@ export default class TriviaCard extends Component {
       });
     });
   }
-
-  //   createNewQuestion(id, question, answer, category, value) {
-  //     axios.post("http://localhost:3001/api/postTriviaQuestion", {
-  //       id: this.state.id
-  //     });
-  //     triviaArray.push(id, question, answer, category, value);
-  //   }
 
   render() {
     return (
@@ -83,7 +85,7 @@ export default class TriviaCard extends Component {
         <br />
         <div id="gameEditor">
           <h4>Game Editor</h4>
-          <h3>Available Question Count: {100} </h3>
+          <h3>Available Question Count: {this.state.triviaArraySize} </h3>
           <Button name={"Edit Question"} />
           <Button name={"Delete Question"} />
           <Button

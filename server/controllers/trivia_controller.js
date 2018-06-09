@@ -21,7 +21,15 @@ const getTriviaArraySize = (req, res, next) => {
   res.status(200).send(triviaArraySize);
 };
 
-// console.log(triviaArray);
+const getTriviaArray = (req, res, next) => {
+  res.status(200).send(triviaArray);
+};
+
+const deleteTriviaID = (req, res, next) => {
+  const { id } = req.params;
+  triviaArray.splice(id, 1);
+  res.status(200).send(triviaArray);
+};
 
 //const updatedTriviaArraySize = triviaArraySize;
 const postTriviaQuestion = (req, res, next) => {
@@ -41,6 +49,8 @@ const postTriviaQuestion = (req, res, next) => {
 //exports getTriviaQuestion to index.js
 module.exports = {
   getTriviaQuestion,
+  getTriviaArraySize,
+  getTriviaArray,
   postTriviaQuestion,
-  getTriviaArraySize
+  deleteTriviaID
 };
