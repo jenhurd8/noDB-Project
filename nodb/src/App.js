@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        appp...js front end
+        <h1>TRIVIA MOUNTAIN</h1>
         <TriviaCard />
       </div>
     );
