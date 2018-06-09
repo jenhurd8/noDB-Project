@@ -14,8 +14,8 @@ const port = 3001;
 
 //gets a triviaQuestion from trivia_controller and sets to api/getTriviaQuestion
 app.get("/api/getTriviaQuestion", tControl.getTriviaQuestion);
-//app.get("/api/getTriviaArraySize", tControl.triviaArraySize);
-
+app.get("/api/getTriviaArraySize", tControl.getTriviaArraySize);
+// app.get("/api/triviaArray",tControl.tr)
 app.post("/api/postTriviaQuestion", tControl.postTriviaQuestion);
 
 //set server to listen for requests

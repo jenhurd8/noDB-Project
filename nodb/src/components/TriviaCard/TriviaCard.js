@@ -58,6 +58,13 @@ export default class TriviaCard extends Component {
     });
   }
 
+  //   createNewQuestion(id, question, answer, category, value) {
+  //     axios.post("http://localhost:3001/api/postTriviaQuestion", {
+  //       id: this.state.id
+  //     });
+  //     triviaArray.push(id, question, answer, category, value);
+  //   }
+
   render() {
     return (
       <div>
@@ -72,18 +79,18 @@ export default class TriviaCard extends Component {
         <button onClick={() => this.next()}>NEXT QUESTION</button>
         <br />
         <br />
-        <br />
         <h5>Question ID#{this.state.id}</h5>
         <br />
-        <br />
-        <button onClick={() => this.next()}>NEXT QUESTION</button>
-        <br />
-        <br />
-        <h4>Game Editor</h4>
-        <h3>Available Question Count: </h3>
-        <Button />
-        <Button />
-        <Button />
+        <div id="gameEditor">
+          <h4>Game Editor</h4>
+          <h3>Available Question Count: {100} </h3>
+          <Button name={"Edit Question"} />
+          <Button name={"Delete Question"} />
+          <Button
+            onClick={() => this.createNewQuestion}
+            name={"Create new Question"}
+          />
+        </div>
       </div>
     );
   }

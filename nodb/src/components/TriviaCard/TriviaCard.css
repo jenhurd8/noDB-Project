@@ -10,3 +10,6 @@ h1 {
 #category {
   text-decoration: underline;
 }
+#gameEditor {
+  background-color: lightgray;
+}
