@@ -18,7 +18,7 @@ const getTriviaQuestion = (req, res, next) => {
 };
 
 const getTriviaArraySize = (req, res, next) => {
-  res.status(200).send(triviaArraySize);
+  res.status(200).send(triviaArray.length);
 };
 
 const getTriviaArray = (req, res, next) => {
@@ -26,8 +26,14 @@ const getTriviaArray = (req, res, next) => {
 };
 
 const deleteTriviaID = (req, res, next) => {
-  const { id } = req.params;
-  triviaArray.splice(id, 1);
+  //keep this id function is working to locate index --https://www.youtube.com/watch?v=QL5jKmVPvUY
+  const { id } = req.params.id;
+
+  function isId(question) {
+    return question.id === id;
+  }
+  triviaArray.findIndex(isId);
+  triviaArray.splice(isId, 1);
   res.status(200).send(triviaArray);
   console.log(triviaArraySize);
 };
@@ -47,11 +53,25 @@ const postTriviaQuestion = (req, res, next) => {
   triviaArraySize = triviaArray.length;
 };
 
+const putNewCategory = (req, res, next) => {
+  const category = req.body.category.title;
+
+  const { id } = req.params.id;
+  function isId(question) {
+    return question.id === id;
+  }
+  triviaArray.findIndex(isId);
+
+  triviaArray[isId].push(triviaArray.category.title);
+  res.status(200).send(triviaArray);
+};
+
 //exports getTriviaQuestion to index.js
 module.exports = {
   getTriviaQuestion,
   getTriviaArraySize,
   getTriviaArray,
   postTriviaQuestion,
-  deleteTriviaID
+  deleteTriviaID,
+  putNewCategory
 };
