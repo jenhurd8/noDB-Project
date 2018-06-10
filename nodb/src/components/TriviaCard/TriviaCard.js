@@ -16,7 +16,8 @@ export default class TriviaCard extends Component {
       showAnswer: false,
       category: "",
       value: 0,
-      triviaArraySize: 0
+      triviaArraySize: 0,
+      formValue: 1000000000000
     };
     this.next = this.next.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -78,6 +79,36 @@ export default class TriviaCard extends Component {
     });
   }
 
+  createNewQuestion(id, question, answer, category, value) {
+    this.createNewQuestion.preventDefault();
+
+    axios
+      .post(
+        `http://localhost:3001/api/getTriviaArray/${this.state.formValue}`,
+        {
+          id: this.state.formValue,
+          question: this.state.question,
+          answer: this.state.answer,
+          category: this.state.category,
+          value: this.state.value
+        }
+      )
+      .then(response => {
+        // this.setState({
+        //   id: this.state.id,
+        //   question: this.state.question,
+        //   answer: this.state.answer,
+        //   category: this.state.category,
+        //   value: this.state.value
+        // });
+      });
+    this.setState({
+      formValue: this.state.formValue + 1
+    });
+
+    // triviaArray.push(id, question, answer, category, value);
+  }
+
   render() {
     return (
       <div>
@@ -102,11 +133,35 @@ export default class TriviaCard extends Component {
             name={"Delete Question"}
             // onClick={() => this.delete(this.id)}
           />
-          <Button
+          {/* <Button
             onClick={() => this.createNewQuestion}
             name={"Create new Question"}
-          />
+          /> */}
         </div>
+        <br />
+        <h4>Create New Question Below</h4>
+        <form onSubmit={() => this.createNewQuestion}>
+          Question:
+          <input type="text" name="question" placeholder="Enter a question" />
+          <br />
+          Answer:
+          <input type="text" name="answer" placeholder="Enter the answer" />
+          <br />
+          Category:
+          <input type="text" name="category" placeholder="Enter the category" />
+          <br />
+          Value:
+          <input type="number" name="value" placeholder="500" />
+          <br />
+          {/* <input
+            type="number"
+            name="id"
+            placeholder="Auto-generated"
+            value={this.state.formValue}
+          /> */}
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     );
   }
