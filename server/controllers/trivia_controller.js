@@ -40,17 +40,18 @@ const deleteTriviaID = (req, res, next) => {
 
 //const updatedTriviaArraySize = triviaArraySize;
 const postTriviaQuestion = (req, res, next) => {
-  const { name } = req.body;
+  //   let newQuestion = req.body;
   let newQuestion = {
-    question,
-    answer,
-    category,
-    value,
-    id
+    id: req.body.id,
+    answer: req.body.answer,
+    question: req.body.question,
+    value: req.body.value,
+    category: req.body.category
   };
   triviaArray.push(newQuestion);
+
   res.status(200).send(triviaArray);
-  triviaArraySize = triviaArray.length;
+  // triviaArraySize = triviaArray.length;
 };
 
 const putNewCategory = (req, res, next) => {
