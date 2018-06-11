@@ -23,7 +23,7 @@ export default class TriviaCard extends Component {
     };
     this.next = this.next.bind(this);
     this.toggle = this.toggle.bind(this);
-    // this.delete = this.delete.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   toggle() {
@@ -143,11 +143,6 @@ export default class TriviaCard extends Component {
           formIndex: this.state.formIndex + 1
         });
       });
-    // this.setState({
-
-    // });
-
-    // triviaArray.push(id, question, answer, category, value);
   }
 
   render() {
@@ -175,18 +170,10 @@ export default class TriviaCard extends Component {
         <div id="gameEditor">
           <h4>Game Editor</h4>
           <h3>Available Question Count: {this.state.triviaArraySize} </h3>
-          <Button name={"Edit Question"} />
-
-          <button
-            name="Delete Question"
+          <Button
             onClick={() => this.delete(this.state.id)}
-          >
-            Delete
-          </button>
-          {/* <Button
-            onClick={() => this.createNewQuestion}
-            name={"Create new Question"}
-          /> */}
+            name={"Delete this Question"}
+          />
         </div>
         <br />
         <h4>Correct The Answer Below:</h4>
