@@ -26,8 +26,9 @@ const getTriviaArray = (req, res, next) => {
 };
 
 const deleteTriviaID = (req, res, next) => {
+  console.log(req.body);
   //keep this id function is working to locate index --https://www.youtube.com/watch?v=QL5jKmVPvUY
-  const { id } = req.params.id;
+  let id = req.body.id;
 
   function isId(question) {
     return question.id === id;

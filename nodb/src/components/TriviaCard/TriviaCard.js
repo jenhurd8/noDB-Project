@@ -17,7 +17,8 @@ export default class TriviaCard extends Component {
       category: "",
       value: 0,
       triviaArraySize: 0,
-      formValue: 1000000000000
+      formValue: 1000000000000,
+      formIndex: 101
     };
     this.next = this.next.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -29,15 +30,27 @@ export default class TriviaCard extends Component {
     this.setState({ showAnswer: !this.state.showAnswer });
   }
 
-  //   delete(id) {
-  //     axios
-  //       .delete("http://localhost:3001/api/deleteTriviaID$`", { id: id })
-  //       .then(response => {
-  //         console.log(id);
-  //         console.log("yes");
-  //         this.setState({ triviaArraySize: this.state.triviaArraySize });
-  //       });
-  //   }
+  delete(id) {
+    console.log(this.state);
+    // function isId(question) {
+    //   return question.id === id;
+    // }
+    // triviaArray.findIndex(isId);
+    console.log(id);
+    axios
+      .delete("http://localhost:3001/api/getTriviaArray" + id)
+      .then(response => {
+        this.setState({
+          id: response.id,
+          question: response.question,
+          answer: response.answer,
+          showAnswer: response.showAnswer,
+          category: response.category,
+          value: response.value
+        });
+        console.log("yes");
+      });
+  }
 
   componentDidMount() {
     // axios
@@ -80,11 +93,11 @@ export default class TriviaCard extends Component {
   }
 
   createNewQuestion(id, question, answer, category, value) {
-    this.createNewQuestion.preventDefault();
+    // this.createNewQuestion.preventDefault();
 
     axios
       .post(
-        `http://localhost:3001/api/getTriviaArray/${this.state.formValue}`,
+        `http://localhost:3001/api/getTriviaArray/${this.state.formIndex}`,
         {
           id: this.state.formValue,
           question: this.state.question,
@@ -94,17 +107,19 @@ export default class TriviaCard extends Component {
         }
       )
       .then(response => {
-        // this.setState({
-        //   id: this.state.id,
-        //   question: this.state.question,
-        //   answer: this.state.answer,
-        //   category: this.state.category,
-        //   value: this.state.value
-        // });
+        this.setState({
+          id: this.state.id,
+          question: this.state.question,
+          answer: this.state.answer,
+          category: this.state.category,
+          value: this.state.value,
+          formValue: this.state.formValue + 1,
+          formIndex: this.state.formIndex + 1
+        });
       });
-    this.setState({
-      formValue: this.state.formValue + 1
-    });
+    // this.setState({
+
+    // });
 
     // triviaArray.push(id, question, answer, category, value);
   }
@@ -129,10 +144,12 @@ export default class TriviaCard extends Component {
           <h4>Game Editor</h4>
           <h3>Available Question Count: {this.state.triviaArraySize} </h3>
           <Button name={"Edit Question"} />
-          <Button
-            name={"Delete Question"}
-            // onClick={() => this.delete(this.id)}
-          />
+          <button
+            name="Delete Question"
+            onClick={() => this.delete(this.state.id)}
+          >
+            Delete
+          </button>
           {/* <Button
             onClick={() => this.createNewQuestion}
             name={"Create new Question"}
@@ -140,7 +157,7 @@ export default class TriviaCard extends Component {
         </div>
         <br />
         <h4>Create New Question Below</h4>
-        <form onSubmit={() => this.createNewQuestion}>
+        <form onSubmit={() => this.createNewQuestion()}>
           Question:
           <input type="text" name="question" placeholder="Enter a question" />
           <br />
@@ -153,12 +170,8 @@ export default class TriviaCard extends Component {
           Value:
           <input type="number" name="value" placeholder="500" />
           <br />
-          {/* <input
-            type="number"
-            name="id"
-            placeholder="Auto-generated"
-            value={this.state.formValue}
-          /> */}
+          Auto Generated Question ID:{" "}
+          <input type="number" defaultValue={this.state.formValue} />
           <br />
           <input type="submit" value="Submit" />
         </form>
