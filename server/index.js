@@ -18,7 +18,7 @@ const port = 3001;
 app.get("/api/getTriviaQuestion", tControl.getTriviaQuestion);
 app.get("/api/getTriviaArraySize", tControl.getTriviaArraySize);
 app.get("/api/getTriviaArray", tControl.getTriviaArray);
-app.post("/api/getTriviaArray", tControl.postTriviaQuestion);
+app.post("/api/getTriviaArray/:index", tControl.postTriviaQuestion);
 app.delete("/api/getTriviaArray/:id", tControl.deleteTriviaID);
 app.put("/api/getTriviaArray/:id", tControl.putNewAnswer);
 

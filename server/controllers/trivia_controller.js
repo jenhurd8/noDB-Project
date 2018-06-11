@@ -44,17 +44,20 @@ const deleteTriviaID = (req, res, next) => {
 
 //const updatedTriviaArraySize = triviaArraySize;
 const postTriviaQuestion = (req, res, next) => {
-  //   let newQuestion = req.body;
+  console.log(req.body);
+  let formIndex = req.body.formIndex;
+
   let newQuestion = {
     id: req.body.id,
     answer: req.body.answer,
     question: req.body.question,
     value: req.body.value,
     category: req.body.category
+    //formIndex: req.body.formIndex
   };
   triviaArray.push(newQuestion);
-
-  res.status(200).send(triviaArray);
+  console.log(triviaArray[formIndex]);
+  res.status(200).send(triviaArray[formIndex]);
   // triviaArraySize = triviaArray.length;
 };
 
@@ -82,5 +85,6 @@ module.exports = {
   getTriviaArray,
   postTriviaQuestion,
   deleteTriviaID,
-  putNewAnswer
+  putNewAnswer,
+  postTriviaQuestion
 };
