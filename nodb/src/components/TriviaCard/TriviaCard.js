@@ -104,18 +104,18 @@ export default class TriviaCard extends Component {
       .then(response => {
         console.log(response.data);
         this.setState({
-          id: response.data.id,
+          id: this.state.formValue,
           question: this.state.newQuestion,
           answer: this.state.newAnswer,
           category: this.state.newCategory,
           value: this.state.newValue,
-          formIndex: this.state.formIndex,
-          formValue: this.state.formValue
+          formIndex: this.state.formIndex + 1,
+          formValue: this.state.formValue + 1
         });
-        this.setState({
-          formValue: this.state.formValue + 1,
-          formIndex: this.state.formIndex + 1
-        });
+        // this.setState({
+        //   formValue: this.state.formValue + 1,
+        //   formIndex: this.state.formIndex + 1
+        // });
       });
   };
 
