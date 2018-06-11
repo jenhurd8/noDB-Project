@@ -18,7 +18,8 @@ export default class TriviaCard extends Component {
       value: 0,
       triviaArraySize: 0,
       formValue: 1000000000000,
-      formIndex: 101
+      formIndex: 101,
+      newAnswer: ""
     };
     this.next = this.next.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -31,14 +32,14 @@ export default class TriviaCard extends Component {
   }
 
   delete(id) {
-    console.log(this.state);
+    //console.log(this.state);
     // function isId(question) {
     //   return question.id === id;
     // }
     // triviaArray.findIndex(isId);
     console.log(id);
     axios
-      .delete("http://localhost:3001/api/getTriviaArray" + id)
+      .delete("http://localhost:3001/api/getTriviaArray/" + this.state.id)
       .then(response => {
         this.setState({
           id: response.id,
@@ -51,6 +52,31 @@ export default class TriviaCard extends Component {
         console.log("yes");
       });
   }
+
+  onChangeHandler = e => {
+    this.setState({ newAnswer: e.target.value });
+  };
+
+  onSubmitHandler = e => {
+    e.preventDefault();
+    console.log(this.state.id);
+    axios
+      .put("http://localhost:3001/api/getTriviaArray/" + this.state.id, {
+        newAnswer: this.state.newAnswer
+      })
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          id: this.state.id,
+          question: this.state.question,
+          answer: response.data.answer,
+          value: this.state.value,
+          category: this.state.category.title,
+          triviaArraySize: this.state.triviaArraySize
+        });
+        console.log(this.state.id);
+      });
+  };
 
   componentDidMount() {
     // axios
@@ -125,13 +151,19 @@ export default class TriviaCard extends Component {
   }
 
   render() {
+    console.log(this.state.answer);
     return (
       <div>
         <h2 id="category">Category: {this.state.category}</h2>
         <h2>{this.state.question}</h2>
         <h2>for $ {this.state.value}</h2>
         <button onClick={this.toggle}>Toggle Answer</button>
-        {this.state.showAnswer && <ToggleFunction answer={this.state.answer} />}
+        {this.state.showAnswer && (
+          <ToggleFunction
+            answer={this.state.answer}
+            newAnswer={this.state.newAnswer}
+          />
+        )}
         <br />
         <br />
         <br />
@@ -144,6 +176,7 @@ export default class TriviaCard extends Component {
           <h4>Game Editor</h4>
           <h3>Available Question Count: {this.state.triviaArraySize} </h3>
           <Button name={"Edit Question"} />
+
           <button
             name="Delete Question"
             onClick={() => this.delete(this.state.id)}
@@ -156,15 +189,21 @@ export default class TriviaCard extends Component {
           /> */}
         </div>
         <br />
-        <h4>Create New Question Below</h4>
-        <form onSubmit={() => this.createNewQuestion()}>
-          Question:
-          <input type="text" name="question" placeholder="Enter a question" />
-          <br />
+        <h4>Correct The Answer Below:</h4>
+        <form onSubmit={this.onSubmitHandler}>
           Answer:
-          <input type="text" name="answer" placeholder="Enter the answer" />
-          <br />
-          Category:
+          <input
+            value={this.state.newAnswer}
+            onChange={this.onChangeHandler}
+            type="text"
+            placeholder="Enter the answer"
+          />
+          <button>Submit new Answer</button>
+        </form>
+        {/* Question:
+          <input type="text" name="question" placeholder="Enter a question" />
+          <br /> */}
+        {/* Category:
           <input type="text" name="category" placeholder="Enter the category" />
           <br />
           Value:
@@ -173,8 +212,7 @@ export default class TriviaCard extends Component {
           Auto Generated Question ID:{" "}
           <input type="number" defaultValue={this.state.formValue} />
           <br />
-          <input type="submit" value="Submit" />
-        </form>
+          */}
       </div>
     );
   }

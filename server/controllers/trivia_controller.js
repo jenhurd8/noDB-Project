@@ -8,7 +8,7 @@ var triviaArraySize = null;
 axios.get("http://jservice.io/api/random?count=100").then(function(response) {
   triviaArray = response.data;
   triviaArraySize = triviaArray.length;
-  console.log(triviaArraySize);
+  //console.log(triviaArraySize);
 });
 
 //pulls random question from Trivia array
@@ -26,17 +26,20 @@ const getTriviaArray = (req, res, next) => {
 };
 
 const deleteTriviaID = (req, res, next) => {
-  console.log(req.body);
-  //keep this id function is working to locate index --https://www.youtube.com/watch?v=QL5jKmVPvUY
-  let id = req.body.id;
+  console.log(req.params.id);
 
-  function isId(question) {
-    return question.id === id;
+  let id = req.params.id;
+
+  function isId(element) {
+    return element.id == id;
   }
-  triviaArray.findIndex(isId);
-  triviaArray.splice(isId, 1);
+  let myIndex = triviaArray.findIndex(isId);
+
+  // var index = triviaArray.findIndex(element => element == id);
+
+  triviaArray.splice(myIndex, 1);
   res.status(200).send(triviaArray);
-  console.log(triviaArraySize);
+  //console.log(triviaArraySize);
 };
 
 //const updatedTriviaArraySize = triviaArraySize;
@@ -55,17 +58,21 @@ const postTriviaQuestion = (req, res, next) => {
   // triviaArraySize = triviaArray.length;
 };
 
-const putNewCategory = (req, res, next) => {
-  const category = req.body.category.title;
+const putNewAnswer = (req, res, next) => {
+  let id = req.params.id;
+  let answer = req.body.newAnswer;
 
-  const { id } = req.params.id;
-  function isId(question) {
-    return question.id === id;
+  console.log(id);
+  console.log(answer);
+
+  function isId(element) {
+    return element.id == id;
   }
-  triviaArray.findIndex(isId);
-
-  triviaArray[isId].push(triviaArray.category.title);
-  res.status(200).send(triviaArray);
+  let myIndex = triviaArray.findIndex(isId);
+  // console.log("huju", myIndex);
+  // console.log(triviaArray[myIndex].answer);
+  triviaArray[myIndex].answer = answer;
+  res.status(200).send(triviaArray[myIndex]);
 };
 
 //exports getTriviaQuestion to index.js
@@ -75,5 +82,5 @@ module.exports = {
   getTriviaArray,
   postTriviaQuestion,
   deleteTriviaID,
-  putNewCategory
+  putNewAnswer
 };
