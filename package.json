@@ -13,6 +13,8 @@
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "lodash": "^4.17.15",
+    "lodash.template": "^4.5.0"
   }
 }
