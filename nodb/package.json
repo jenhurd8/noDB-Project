@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "handlebars": "^4.4.5",
+    "js-yaml": "^3.13.1",
+    "merge": "^1.2.1",
     "mixin-deep": "^2.0.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-scripts": "1.1.4",
+    "set-value": "^3.0.1",
     "url-parse": "^1.4.7"
   },
   "scripts": {
