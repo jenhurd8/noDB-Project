@@ -15,7 +15,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "handlebars": "^4.4.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lodash.template": "^4.5.0",
     "mixin-deep": "^2.0.1",
     "set-value": "^3.0.1",
